@@ -1,73 +1,53 @@
 package com.hse.somport.somport.controllers;
 
+import com.hse.somport.somport.entities.UserEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
-import com.hse.somport.somport.entities.User;
-import com.hse.somport.somport.entities.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import jakarta.validation.Valid;
-
-@Controller
+@RestController
+@RequestMapping("/api/users")
 public class UserController {
 
-    private final UserRepository userRepository;
-
     @Autowired
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    private UserService userService;
+
+    // Регистрация нового пользователя
+    @PostMapping("/register")
+    public UserEntity registerUser(@RequestParam String username, @RequestParam String password) {
+        return userService.registerUser(username, password);
     }
 
-    @GetMapping("/signup")
-    public String showSignUpForm(User user) {
-        return "add-user";
+    // Получение пользователя по id
+    @GetMapping("/{id}")
+    public UserEntity getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
-    @PostMapping("/adduser")
-    public String addUser(@Valid User user, BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            return "add-user";
-        }
-
-        userRepository.save(user);
-        return "redirect:/index";
+    // Получение пользователя по username
+    @GetMapping("/username/{username}")
+    public UserEntity getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
     }
 
-    @GetMapping("/index")
-    public String showUserList(Model model) {
-        var user = User.builder()
-                       .id(229l)
-                       .email("fdsadsd")
-                       .name("dsfdsfds")
-                       .build();
-        model.addAttribute("users", List.of(user));
-        return "index";
+    // Обновление пользователя
+    @PutMapping("/{id}")
+    public UserEntity updateUser(@PathVariable Long id,
+                                 @RequestParam(required = false) String username,
+                                 @RequestParam(required = false) String password) {
+        return userService.updateUser(id, username, password);
     }
 
-    @PostMapping("/update/{id}")
-    public String updateUser(@PathVariable("id") long id, @Valid User user,
-                             BindingResult result, Model model) {
-        if (result.hasErrors()) {
-            user.setId(id);
-            return "update-user";
-        }
-
-        userRepository.save(user);
-        return "redirect:/index";
+    // Удаление пользователя
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userService.deleteUser(id);
     }
 
-    @GetMapping("/delete/{id}")
-    public String deleteUser(@PathVariable("id") long id, Model model) {
-        User user = userRepository.findById(id)
-                                  .orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        userRepository.delete(user);
-        return "redirect:/index";
+    // Получение списка всех пользователей
+    @GetMapping
+    public List<UserEntity> getAllUsers() {
+        return userService.getAllUsers();
     }
-
-    // additional CRUD methods
 }
