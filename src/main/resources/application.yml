@@ -21,8 +21,4 @@ spring:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
 
-#  autoconfigure:
-#    exclude: org.springframework.boot.autoconfigure.security.servlet.SpringBootWebSecurityConfiguration
-#
-
 
