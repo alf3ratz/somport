@@ -1,6 +1,7 @@
 package com.hse.somport.somport.controllers;
 
 import com.hse.somport.somport.entities.UserEntity;
+import com.hse.somport.somport.entities.dto.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +16,13 @@ public class UserController {
 
     // Регистрация нового пользователя
     @PostMapping("/register")
-    public UserEntity registerUser(@RequestParam String username, @RequestParam String password) {
-        return userService.registerUser(username, password);
+    public UserEntity registerUser(@RequestBody UserDto userDto) {
+        return userService.registerUser(userDto);
+    }
+
+    @PostMapping("/login")
+    public UserEntity loginUser(@RequestBody UserDto userDto) {
+        return userService.loginUser(userDto);
     }
 
     // Получение пользователя по id
@@ -50,4 +56,6 @@ public class UserController {
     public List<UserEntity> getAllUsers() {
         return userService.getAllUsers();
     }
+
+
 }

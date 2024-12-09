@@ -1,6 +1,7 @@
 package com.hse.somport.somport;
 
 import com.hse.somport.somport.config.SecurityConfig;
+import com.hse.somport.somport.config.WebConfig;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -13,7 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @SpringBootApplication(exclude = SecurityAutoConfiguration.class)
-@Import(SecurityConfig.class)
+@Import({SecurityConfig.class, WebConfig.class})
 public class SomportApplication {
 
     public static void main(String[] args) {
