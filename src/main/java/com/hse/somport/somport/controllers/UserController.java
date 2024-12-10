@@ -1,7 +1,8 @@
 package com.hse.somport.somport.controllers;
 
 import com.hse.somport.somport.entities.UserEntity;
-import com.hse.somport.somport.entities.dto.UserDto;
+import com.hse.somport.somport.dto.UserDto;
+import com.hse.somport.somport.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,29 +13,29 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     // Регистрация нового пользователя
     @PostMapping("/register")
     public UserEntity registerUser(@RequestBody UserDto userDto) {
-        return userService.registerUser(userDto);
+        return userServiceImpl.registerUser(userDto);
     }
 
     @PostMapping("/login")
     public UserEntity loginUser(@RequestBody UserDto userDto) {
-        return userService.loginUser(userDto);
+        return userServiceImpl.loginUser(userDto);
     }
 
     // Получение пользователя по id
     @GetMapping("/{id}")
     public UserEntity getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+        return userServiceImpl.getUserById(id);
     }
 
     // Получение пользователя по username
     @GetMapping("/username/{username}")
     public UserEntity getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+        return userServiceImpl.getUserByUsername(username);
     }
 
     // Обновление пользователя
@@ -42,19 +43,19 @@ public class UserController {
     public UserEntity updateUser(@PathVariable Long id,
                                  @RequestParam(required = false) String username,
                                  @RequestParam(required = false) String password) {
-        return userService.updateUser(id, username, password);
+        return userServiceImpl.updateUser(id, username, password);
     }
 
     // Удаление пользователя
     @DeleteMapping("/{id}")
     public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
+        userServiceImpl.deleteUser(id);
     }
 
     // Получение списка всех пользователей
     @GetMapping
     public List<UserEntity> getAllUsers() {
-        return userService.getAllUsers();
+        return userServiceImpl.getAllUsers();
     }
 
 

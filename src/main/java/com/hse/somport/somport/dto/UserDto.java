@@ -1,6 +1,5 @@
-package com.hse.somport.somport.entities.dto;
+package com.hse.somport.somport.dto;
 
-import lombok.Builder;
 import lombok.Data;
 
 @Data

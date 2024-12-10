@@ -1,11 +1,13 @@
-package com.hse.somport.somport.entities;
+package com.hse.somport.somport.entities.repositories;
 
+import com.hse.somport.somport.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<UserEntity, Long> {
 
-    UserEntity findByUsername(String username);
+    Optional<UserEntity> findByUsername(String username);
 }
