@@ -15,35 +15,16 @@ public class UserController {
     @Autowired
     private UserServiceImpl userServiceImpl;
 
-    // Регистрация нового пользователя
-    @PostMapping("/register")
-    public UserEntity registerUser(@RequestBody UserDto userDto) {
-        return userServiceImpl.registerUser(userDto);
-    }
-
-    @PostMapping("/login")
-    public UserEntity loginUser(@RequestBody UserDto userDto) {
-        return userServiceImpl.loginUser(userDto);
-    }
-
     // Получение пользователя по id
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
+    public UserDto getUserById(@PathVariable Long id) {
         return userServiceImpl.getUserById(id);
     }
 
     // Получение пользователя по username
     @GetMapping("/username/{username}")
-    public UserEntity getUserByUsername(@PathVariable String username) {
+    public UserDto getUserByUsername(@PathVariable String username) {
         return userServiceImpl.getUserByUsername(username);
-    }
-
-    // Обновление пользователя
-    @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable Long id,
-                                 @RequestParam(required = false) String username,
-                                 @RequestParam(required = false) String password) {
-        return userServiceImpl.updateUser(id, username, password);
     }
 
     // Удаление пользователя
@@ -54,7 +35,7 @@ public class UserController {
 
     // Получение списка всех пользователей
     @GetMapping
-    public List<UserEntity> getAllUsers() {
+    public List<UserDto> getAllUsers() {
         return userServiceImpl.getAllUsers();
     }
 

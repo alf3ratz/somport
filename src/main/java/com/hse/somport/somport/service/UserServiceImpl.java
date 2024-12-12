@@ -21,58 +21,25 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-
-    //    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper = Mappers.getMapper(UserMapper.class);
-
-//    @Autowired
-//    public UserServiceImpl(PasswordEncoder passwordEncoder) {
-//        this.passwordEncoder = passwordEncoder;
-//    }
-
-    // Метод для регистрации нового пользователя
-    public UserEntity registerUser(UserDto userDto) {
-        if (userRepository.findByUsername(userDto.getUsername()) != null) {
-            throw new SomportConflictException("Пользователь с таким именем или email уже существует");
-        }
-
-        // Шифруем пароль перед сохранением
-        //var encryptedPassword = passwordEncoder.encode(userDto.getPassword());
-        var user = userMapper.userDTOToUserEntity(userDto);
-        user.setPassword(user.getPassword());
-        return userRepository.save(user);
-    }
-
-    public UserEntity loginUser(UserDto userDto) {
-        return Optional.ofNullable(userRepository.findByUsername(userDto.getUsername())).get()
-                .orElseThrow(() -> new SomportNotFoundException("Пользователь с таким именем или email не существует"));
-    }
+    private static final String USER_NOT_FOUND_MSG = "Пользователь не найден";
 
     // Метод для получения пользователя по id
-    public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+    public UserDto getUserById(Long id) {
+        return userRepository.findById(id)
+                .map(userMapper::userEntityToUserDTO)
+                .orElseThrow(() -> new SomportNotFoundException(USER_NOT_FOUND_MSG));
     }
 
     // Метод для получения пользователя по username
-    public UserEntity getUserByUsername(String username) {
-        return userRepository.findByUsername(username).get();
+    public UserDto getUserByUsername(String username) {
+        return userRepository.findByUsername(username)
+                .map(userMapper::userEntityToUserDTO)
+                .orElseThrow(() -> new SomportNotFoundException(USER_NOT_FOUND_MSG));
     }
 
-    // Метод для обновления пользователя
-    public UserEntity updateUser(Long id, String username, String password) {
-        var user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-
-        // Обновляем только если есть изменения
-        if (username != null && !username.isEmpty()) {
-            user.setUsername(username);
-        }
-        if (password != null && !password.isEmpty()) {
-            //user.setPassword(passwordEncoder.encode(password));
-            user.setPassword(password);
-        }
-
-        return userRepository.save(user);
+    public boolean isUserExists(String username) {
+        return userRepository.findByUsername(username).isPresent();
     }
 
     // Метод для удаления пользователя
@@ -80,22 +47,16 @@ public class UserServiceImpl implements UserService {
         userRepository.deleteById(id);
     }
 
-    public List<UserEntity> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userRepository.findAll().stream()
+                .map(userMapper::userEntityToUserDTO)
+                .toList();
     }
 
     @Override
     public boolean existsByUsername(String username) {
-        UserEntity user = userRepository.findByUsername(username).orElse(null);
-        if (user != null) {
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public boolean existsByEmail(String email) {
-        return false;
+        UserEntity user = userRepository.findByUsername(username).orElseThrow(() -> new SomportNotFoundException("Пользователь с именем " + username + " не найден"));
+        return true;
     }
 
     @Override
