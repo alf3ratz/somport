@@ -48,7 +48,7 @@ public class UserService {
 
     // Метод для получения пользователя по id
     public UserEntity getUserById(Long id) {
-        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
+        return userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь  не найден"));
     }
 
     // Метод для получения пользователя по username
