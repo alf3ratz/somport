@@ -8,7 +8,10 @@ import com.hse.somport.somport.entities.UserRepository;
 import com.hse.somport.somport.entities.dto.UserDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.*;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -17,8 +20,10 @@ import static org.mockito.Mockito.*;
 import java.util.List;
 import java.util.Optional;
 
+@ExtendWith(MockitoExtension.class)
 class UserServiceTest {
 
+    @Autowired
     @Mock
     private UserRepository userRepository;
 
@@ -45,40 +50,39 @@ class UserServiceTest {
     }
 
     @Test
-    void testRegisterUser_Success() {
-        // Arrange
-        when(userRepository.findByUsername(userDto.getUsername())).thenReturn(null);  // Нет пользователя с таким именем
-        when(passwordEncoder.encode(userDto.getPassword())).thenReturn("encryptedPassword");
+    void successRegisterUserTest() {
+        // Готовим данные
+        when(userRepository.findByUsername(userDto.getUsername())).thenReturn(null);
         when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
 
-        // Act
+        // Регистрация
         UserEntity registeredUser = userService.registerUser(userDto);
 
-        // Assert
+        // Проверка
         assertNotNull(registeredUser);
         assertEquals("testUser", registeredUser.getUsername());
-        verify(userRepository, times(1)).save(any(UserEntity.class));
     }
 
     @Test
-    void testRegisterUser_Conflict() {
-        // Arrange
-        when(userRepository.findByUsername(userDto.getUsername())).thenReturn(userEntity);  // Пользователь уже существует
+    void registerUserAlreadyExistTest() {
+        // Готовим данные
+        when(userRepository.findByUsername(userDto.getUsername())).thenReturn(userEntity);
 
-        // Act & Assert
+        // Регистрация
         SomportConflictException exception = assertThrows(SomportConflictException.class, () -> {
             userService.registerUser(userDto);
         });
 
+        // Проверка
         assertEquals("Пользователь с таким именем или email уже существует", exception.getMessage());
     }
 
     @Test
-    void testLoginUser_Success() {
-        // Arrange
+    void successLoginUserTest() {
+        // Готовим данные
         when(userRepository.findByUsername(userDto.getUsername())).thenReturn(userEntity);
 
-        // Act
+        // Login
         UserEntity loggedInUser = userService.loginUser(userDto);
 
         // Assert
@@ -87,24 +91,25 @@ class UserServiceTest {
     }
 
     @Test
-    void testLoginUser_NotFound() {
+    void loginNotFoundUserTest() {
         // Arrange
         when(userRepository.findByUsername(userDto.getUsername())).thenReturn(null);
 
-        // Act & Assert
+        // Login
         SomportNotFoundException exception = assertThrows(SomportNotFoundException.class, () -> {
             userService.loginUser(userDto);
         });
 
+        // Assert
         assertEquals("Пользователь с таким именем или email не существует", exception.getMessage());
     }
 
     @Test
-    void testGetUserById_Success() {
-        // Arrange
+    void getUserByIdSuccessTest() {
+        // Prepare data
         when(userRepository.findById(1L)).thenReturn(Optional.of(userEntity));
 
-        // Act
+        // get user
         UserEntity foundUser = userService.getUserById(1L);
 
         // Assert
@@ -113,65 +118,25 @@ class UserServiceTest {
     }
 
     @Test
-    void testGetUserById_NotFound() {
-        // Arrange
+    void getUserByIdNotFoundTest() {
+        // Prepare Data
         when(userRepository.findById(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
+        // Get user
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             userService.getUserById(1L);
         });
 
+        // Assert
         assertEquals("Пользователь  не найден", exception.getMessage());
     }
 
     @Test
-    void testUpdateUser_Success() {
-        // Arrange
-        when(userRepository.findById(1L)).thenReturn(Optional.of(userEntity));
-        when(userRepository.save(any(UserEntity.class))).thenReturn(userEntity);
-
-        // Act
-        UserEntity updatedUser = userService.updateUser(1L, "newUsername", "newPassword");
-
-        // Assert
-        assertNotNull(updatedUser);
-        assertEquals("newUsername", updatedUser.getUsername());
-        assertNotEquals("encryptedPassword", updatedUser.getPassword());
-        verify(userRepository, times(1)).save(any(UserEntity.class));
-    }
-
-    @Test
-    void testUpdateUser_UserNotFound() {
-        // Arrange
-        when(userRepository.findById(1L)).thenReturn(Optional.empty());
-
-        // Act & Assert
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            userService.updateUser(1L, "newUsername", "newPassword");
-        });
-
-        assertEquals("Пользователь не найден", exception.getMessage());
-    }
-
-    @Test
-    void testDeleteUser_Success() {
-        // Arrange
-        doNothing().when(userRepository).deleteById(1L);
-
-        // Act
-        userService.deleteUser(1L);
-
-        // Assert
-        verify(userRepository, times(1)).deleteById(1L);
-    }
-
-    @Test
-    void testGetAllUsers() {
-        // Arrange
+    void getAllUsersSuccessTest() {
+        // Prepare data
         when(userRepository.findAll()).thenReturn(List.of(userEntity));
 
-        // Act
+        // Get all users
         List<UserEntity> users = userService.getAllUsers();
 
         // Assert

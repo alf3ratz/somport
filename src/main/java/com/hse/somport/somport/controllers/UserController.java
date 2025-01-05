@@ -37,20 +37,6 @@ public class UserController {
         return userService.getUserByUsername(username);
     }
 
-    // Обновление пользователя
-    @PutMapping("/{id}")
-    public UserEntity updateUser(@PathVariable Long id,
-                                 @RequestParam(required = false) String username,
-                                 @RequestParam(required = false) String password) {
-        return userService.updateUser(id, username, password);
-    }
-
-    // Удаление пользователя
-    @DeleteMapping("/{id}")
-    public void deleteUser(@PathVariable Long id) {
-        userService.deleteUser(id);
-    }
-
     // Получение списка всех пользователей
     @GetMapping
     public List<UserEntity> getAllUsers() {

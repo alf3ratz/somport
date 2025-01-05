@@ -56,26 +56,6 @@ public class UserService {
         return userRepository.findByUsername(username);
     }
 
-    // Метод для обновления пользователя
-    public UserEntity updateUser(Long id, String username, String password) {
-        var user = userRepository.findById(id).orElseThrow(() -> new RuntimeException("Пользователь не найден"));
-
-        // Обновляем только если есть изменения
-        if (username != null && !username.isEmpty()) {
-            user.setUsername(username);
-        }
-        if (password != null && !password.isEmpty()) {
-            user.setPassword(passwordEncoder.encode(password));
-        }
-
-        return userRepository.save(user);
-    }
-
-    // Метод для удаления пользователя
-    public void deleteUser(Long id) {
-        userRepository.deleteById(id);
-    }
-
     public List<UserEntity> getAllUsers() {
         return userRepository.findAll();
     }
