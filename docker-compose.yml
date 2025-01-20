@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  db:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: somport
+      POSTGRES_USER: somport
+      POSTGRES_PASSWORD: somport
+  app:
+    build: .
+    ports:
+      - "9000:8080"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db/somport
+      SPRING_DATASOURCE_USERNAME: somport
+      SPRING_DATASOURCE_PASSWORD: somport
+    depends_on:
+      - db
