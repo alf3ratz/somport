@@ -28,7 +28,10 @@ public class PostgresTest {
     @Container
     static PostgreSQLContainer<?> postgreSQLContainer = new PostgreSQLContainer<>(
             "postgres:16-alpine"
-    ).withReuse(true);
+    ).withReuse(true)
+            .withDatabaseName("somport")
+            .withUsername("somport")
+            .withPassword("somport");
 
     //    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine")
 //            .withDatabaseName("testdb")
