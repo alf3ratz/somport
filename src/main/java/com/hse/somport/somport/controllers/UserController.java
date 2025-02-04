@@ -1,7 +1,8 @@
 package com.hse.somport.somport.controllers;
 
 import com.hse.somport.somport.entities.UserEntity;
-import com.hse.somport.somport.entities.dto.UserDto;
+import com.hse.somport.somport.dto.UserDto;
+import com.hse.somport.somport.service.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,35 +13,30 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private UserService userService;
-
-    // Регистрация нового пользователя
-    @PostMapping("/register")
-    public UserEntity registerUser(@RequestBody UserDto userDto) {
-        return userService.registerUser(userDto);
-    }
-
-    @PostMapping("/login")
-    public UserEntity loginUser(@RequestBody UserDto userDto) {
-        return userService.loginUser(userDto);
-    }
+    private UserServiceImpl userServiceImpl;
 
     // Получение пользователя по id
     @GetMapping("/{id}")
-    public UserEntity getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    public UserDto getUserById(@PathVariable Long id) {
+        return userServiceImpl.getUserById(id);
     }
 
     // Получение пользователя по username
     @GetMapping("/username/{username}")
-    public UserEntity getUserByUsername(@PathVariable String username) {
-        return userService.getUserByUsername(username);
+    public UserDto getUserByUsername(@PathVariable String username) {
+        return userServiceImpl.getUserByUsername(username);
+    }
+
+    // Удаление пользователя
+    @DeleteMapping("/{id}")
+    public void deleteUser(@PathVariable Long id) {
+        userServiceImpl.deleteUser(id);
     }
 
     // Получение списка всех пользователей
     @GetMapping
-    public List<UserEntity> getAllUsers() {
-        return userService.getAllUsers();
+    public List<UserDto> getAllUsers() {
+        return userServiceImpl.getAllUsers();
     }
 
 

@@ -5,18 +5,57 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
+    <!--    <changeSet id="1" author="a.petropavlovskiy">-->
+    <!--        <createTable tableName="user_ref">-->
+    <!--            <column name="id" type="BIGINT">-->
+    <!--                <constraints primaryKey="true" nullable="false"/>-->
+    <!--            </column>-->
+    <!--            <column name="username" type="VARCHAR(255)">-->
+    <!--                <constraints nullable="false"/>-->
+    <!--            </column>-->
+    <!--            <column name="password" type="VARCHAR(255)">-->
+    <!--                <constraints nullable="false"/>-->
+    <!--            </column>-->
+    <!--        </createTable>-->
+    <!--    </changeSet>-->
+
     <changeSet id="1" author="a.petropavlovskiy">
         <createTable tableName="user_ref">
-            <column name="id" type="BIGINT">
+            <column name="id" type="bigint">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="username" type="VARCHAR(255)">
+            <column name="username" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
-            <column name="password" type="VARCHAR(255)">
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="varchar(16)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
+    </changeSet>
+
+    <!-- Создание таблицы для токенов, связанной с user_ref -->
+    <changeSet id="2" author="a.petropavlovskiy">
+        <createTable tableName="token_jn">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="token" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseColumnNames="user_id"
+                baseTableName="token_jn"
+                constraintName="fk_token_user_ref"
+                referencedColumnNames="id"
+                referencedTableName="user_ref"
+                onDelete="CASCADE"/>
     </changeSet>
 
 </databaseChangeLog>
