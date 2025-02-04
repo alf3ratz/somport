@@ -26,7 +26,7 @@ public class AuthenticationController {
     public ResponseEntity<String> register(
             @RequestBody RegistrationRequestDto registrationDto) {
         authenticationService.register(registrationDto);
-        return ResponseEntity.ok("Регистрация прошла успешно");
+        return ResponseEntity.ok("Successfully registered");
     }
 
     @PostMapping("/login")
