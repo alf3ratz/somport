@@ -7,7 +7,7 @@ server:
       force: true
 spring:
   datasource:
-    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver #org.postgresql.Driver
+    driver-class-name: org.postgresql.Driver
     password: postgres
     url: jdbc:postgresql://localhost:5432/somport
     username: postgres
