@@ -30,33 +30,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-
-//    @Bean
-//    public BCryptPasswordEncoder passwordEncoder() {
-//        return new BCryptPasswordEncoder();
-//    }
-//
-//    @Bean
-//    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-//        return http.cors(
-//                        (cors) -> cors
-//                                .configurationSource(corsConfigurationSource()))
-//                .csrf(AbstractHttpConfigurer::disable)
-//                .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
-//                            try {
-//                                authorizationManagerRequestMatcherRegistry
-//                                        .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/**").permitAll()
-//                                        .anyRequest()
-//                                        .authenticated();
-//                            } catch (Exception e) {
-//                                throw new RuntimeException(e.getMessage());
-//                            }
-//                        }
-//                )
-//                .formLogin(AbstractHttpConfigurer::disable).build();
-//    }
-
-
     private final JwtFilter jwtFIlter;
 
     private final UserService userService;
