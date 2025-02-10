@@ -65,6 +65,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(auth -> {
                     auth.requestMatchers("/login/**", "/registration/**", "/css/**", "/refresh_token/**", "/", "/v3/api-docs/**","/swagger-ui/**")
                             .permitAll();
+                    auth.requestMatchers("/hls/playlist").permitAll();
                     auth.requestMatchers("/admin/**").hasAuthority("ADMIN");
                     auth.anyRequest().authenticated();
                 })
