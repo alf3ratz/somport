@@ -31,4 +31,9 @@ spring:
       access_token_expiration: 36000000 # 10 hours
       refresh_token_expiration: 252000000 # 7 days
 
+  websocket:
+    server:
+      keep-alive: 60000
+      async-timeout: 0
+
 

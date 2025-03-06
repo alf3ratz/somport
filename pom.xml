@@ -15,6 +15,9 @@
     <description>somport</description>
     <properties>
         <java.version>17</java.version>
+        <spring.version>6.0.12</spring.version>
+        <spring-security.version>6.1.5</spring-security.version>
+        <spring-security-messaging.version>6.0.2</spring-security-messaging.version>
     </properties>
     <dependencies>
         <dependency>
@@ -122,20 +125,6 @@
             <artifactId>rest-assured</artifactId>
             <scope>test</scope>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-webflux</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>dev.onvoid.webrtc</groupId>-->
-<!--            <artifactId>webrtc-java</artifactId>-->
-<!--            <version>0.9.0</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.json</groupId>-->
-<!--            <artifactId>json</artifactId>-->
-<!--            <version>20160810</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
@@ -145,27 +134,15 @@
             <artifactId>spring-websocket</artifactId>
             <version>5.3.10</version>
         </dependency>
-
-        <!-- webrtc-java (если используешь эту библиотеку) -->
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
             <version>1.5.6</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springdoc</groupId>-->
-<!--            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>-->
-<!--            <version>2.1.0</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.java-websocket</groupId>-->
-<!--            <artifactId>Java-WebSocket</artifactId>-->
-<!--            <version>1.5.3</version> &lt;!&ndash; Версия может отличаться, выберите актуальную &ndash;&gt;-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-messaging</artifactId>
@@ -180,10 +157,19 @@
             <version>2.1.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-websocket</artifactId>
+        </dependency>
 <!--        <dependency>-->
-<!--            <groupId>org.apache.tomcat</groupId>-->
-<!--            <artifactId>tomcat-websocket</artifactId>-->
-<!--            <version>10.1.18</version>  &lt;!&ndash; Use the correct version based on your Spring Boot version &ndash;&gt;-->
+<!--            <groupId>org.springframework</groupId>-->
+<!--            <artifactId>spring-messaging</artifactId>-->
+<!--            <version>${spring.version}</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-messaging</artifactId>-->
+<!--            <version>${spring-security-messaging.version}</version>-->
 <!--        </dependency>-->
     </dependencies>
 
