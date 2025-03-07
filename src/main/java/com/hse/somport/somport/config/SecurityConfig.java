@@ -63,32 +63,6 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf(AbstractHttpConfigurer::disable);
-//        http.authorizeHttpRequests(auth -> {
-//                    auth.requestMatchers("/login/**", "/registration/**", "/css/**", "/refresh_token/**", "/", "/v3/api-docs/**", "/swagger-ui/**")
-//                            .permitAll();
-//                    auth.requestMatchers("/hls/playlist").permitAll();
-//                    auth.requestMatchers("/hls/stream.m3u8").permitAll();
-//                    auth.requestMatchers("/ws/**", "/sockjs-node/**").permitAll();
-//                    auth.requestMatchers("/admin/**").hasAuthority("ADMIN");
-//                    auth.anyRequest().authenticated();
-//                })
-//                .userDetailsService(userService)
-//                .exceptionHandling(e -> {
-//                    e.accessDeniedHandler(accessDeniedHandler);
-//                    e.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED));
-//                })
-//                .securityMatcher("/ws/**") // ✅ Не применять JWT для WebSocket
-//                .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
-//                .addFilterBefore(jwtFIlter, UsernamePasswordAuthenticationFilter.class)
-//                .addFilterBefore(jwtFIlter, UsernamePasswordAuthenticationFilter.class)
-//                .logout(log -> {
-//                    log.logoutUrl("/logout");
-//                    log.addLogoutHandler(customLogoutHandler);
-//                    log.logoutSuccessHandler((request, response, authentication) ->
-//                            SecurityContextHolder.clearContext());
-//                });
-//        return http.build();
         http
                 .csrf(csrf -> csrf
                         .ignoringRequestMatchers("/ws/**") // Отключаем CSRF для WebSocket
@@ -106,7 +80,7 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/ws/**",          // Разрешаем WebSocket
                                 "/sockjs-node/**",  // Для SockJS
-                                "/video-stream"
+                                "/video-stream/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()

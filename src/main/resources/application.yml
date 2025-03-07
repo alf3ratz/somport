@@ -5,6 +5,10 @@ server:
       charset: UTF-8
       enabled: true
       force: true
+  server:
+    tomcat:
+      keep-alive-timeout: 300
+      connection-timeout: 300
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
