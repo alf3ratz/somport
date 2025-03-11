@@ -13,7 +13,7 @@ public class VideoConfigController {
     @Autowired
     private VideoConfigService videoStreamService;
 
-    @PostMapping("/streams")
+    @GetMapping("/streams")
     public VideoConfigDto register() {
         return videoStreamService.getStreamConfig();
     }
