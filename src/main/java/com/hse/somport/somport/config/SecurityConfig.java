@@ -80,7 +80,8 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/ws/**",          // Разрешаем WebSocket
                                 "/sockjs-node/**",  // Для SockJS
-                                "/video-stream/**"
+                                "/video-stream/**",
+                                "/video-config/**"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()
