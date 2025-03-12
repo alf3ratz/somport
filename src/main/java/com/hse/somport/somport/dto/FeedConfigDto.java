@@ -12,6 +12,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class FeedConfigDto {
+    private Long id;
 
     @JsonProperty("config")
     private FeedConfigDetails config;

@@ -6,6 +6,8 @@ import com.hse.somport.somport.service.FeedConfigService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/feed-config/v1")
 public class FeedConfigController {
@@ -31,5 +33,10 @@ public class FeedConfigController {
     @DeleteMapping("/{id}")
     public void deleteConfigById(@PathVariable Long id) {
         feedConfigService.deleteConfigById(id);
+    }
+
+    @GetMapping("/getAll")
+    public List<FeedConfigDto> getAllConfigs() {
+        return feedConfigService.getAllConfigs();
     }
 }

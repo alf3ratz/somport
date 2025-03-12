@@ -11,6 +11,8 @@ import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class FeedConfigService {
     private static final String CONFIG_NOT_FOUND_MSG = "Конфигурация не найдена";
@@ -33,14 +35,18 @@ public class FeedConfigService {
         return feedConfigDto;
     }
 
-    @Transactional
     public FeedConfigDto getConfigById(Long id) {
         return feedConfigRepository.findById(id)
                 .map(feedConfigMapper::feedConfigEntityToDto)
                 .orElseThrow(() -> new SomportNotFoundException(CONFIG_NOT_FOUND_MSG));
     }
 
-    @Transactional
+    public List<FeedConfigDto> getAllConfigs() {
+        return feedConfigRepository.findAll()
+                .stream().map(feedConfigMapper::feedConfigEntityToDto)
+                .toList();
+    }
+
     public FeedConfigDto updateConfigById(Long id, FeedConfigDto feedConfigDto) {
         var existingEntity = feedConfigRepository.findById(id)
                 .orElseThrow(() -> new SomportNotFoundException(CONFIG_NOT_FOUND_MSG));
