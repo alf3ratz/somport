@@ -9,7 +9,7 @@ import lombok.Data;
 public class FeedConfigDetails {
 
     @NotNull(message = "Поле 'feedCount' не может быть null")
-    private String feedCount;
+    private Long feedCount;
 
     @NotNull(message = "Поле 'poolNumber' не может быть null")
     private Long poolNumber;

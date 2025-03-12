@@ -48,6 +48,9 @@ public class FeedConfigService {
     }
 
     public FeedConfigDto updateConfigById(Long id, FeedConfigDto feedConfigDto) {
+        if (feedConfigDto.getConfig() == null || feedConfigDto.getConfig().getFeedCount() == null) {
+            throw new SomportBadRequestException(CONFIG_WRONG_MSG);
+        }
         var existingEntity = feedConfigRepository.findById(id)
                 .orElseThrow(() -> new SomportNotFoundException(CONFIG_NOT_FOUND_MSG));
 
