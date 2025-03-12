@@ -5,20 +5,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <!--    <changeSet id="1" author="a.petropavlovskiy">-->
-    <!--        <createTable tableName="user_ref">-->
-    <!--            <column name="id" type="BIGINT">-->
-    <!--                <constraints primaryKey="true" nullable="false"/>-->
-    <!--            </column>-->
-    <!--            <column name="username" type="VARCHAR(255)">-->
-    <!--                <constraints nullable="false"/>-->
-    <!--            </column>-->
-    <!--            <column name="password" type="VARCHAR(255)">-->
-    <!--                <constraints nullable="false"/>-->
-    <!--            </column>-->
-    <!--        </createTable>-->
-    <!--    </changeSet>-->
-
     <changeSet id="1" author="a.petropavlovskiy">
         <createTable tableName="user_ref">
             <column name="id" type="bigint">
@@ -36,7 +22,6 @@
         </createTable>
     </changeSet>
 
-    <!-- Создание таблицы для токенов, связанной с user_ref -->
     <changeSet id="2" author="a.petropavlovskiy">
         <createTable tableName="token_jn">
             <column name="id" type="bigint">

@@ -81,7 +81,9 @@ public class SecurityConfig {
                                 "/ws/**",          // Разрешаем WebSocket
                                 "/sockjs-node/**",  // Для SockJS
                                 "/video-stream/**",
-                                "/video-config/**"
+                                "/video-config/**",
+                                "/feed-config/v1/**",
+                                "/feed-config/v1"
                         ).permitAll()
                         .requestMatchers("/admin/**").hasAuthority("ADMIN")
                         .anyRequest().authenticated()

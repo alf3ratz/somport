@@ -161,16 +161,20 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-websocket</artifactId>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework</groupId>-->
-<!--            <artifactId>spring-messaging</artifactId>-->
-<!--            <version>${spring.version}</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-messaging</artifactId>-->
-<!--            <version>${spring-security-messaging.version}</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>com.vladmihalcea</groupId>
+            <artifactId>hibernate-types-52</artifactId>
+            <version>2.14.0</version> <!-- Убедитесь, что версия совместима с вашей версией Hibernate -->
+        </dependency>
+        <dependency>
+            <groupId>io.hypersistence</groupId>
+            <artifactId>hypersistence-utils-hibernate-63</artifactId>
+            <version>3.9.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-validation</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
