@@ -21,7 +21,7 @@ public class FeedConfigController {
     }
 
     @PostMapping
-    public FeedConfigDto getConfigById(@RequestBody FeedConfigDto feedConfigDto) {
+    public FeedConfigDto createConfig(@RequestBody FeedConfigDto feedConfigDto) {
         return feedConfigService.createConfig(feedConfigDto);
     }
 
