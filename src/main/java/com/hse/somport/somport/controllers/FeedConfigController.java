@@ -3,17 +3,17 @@ package com.hse.somport.somport.controllers;
 import com.hse.somport.somport.dto.FeedConfigDto;
 import com.hse.somport.somport.dto.VideoConfigDto;
 import com.hse.somport.somport.service.FeedConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("/feed-config/v1")
+@RequestMapping("/api/feed-config/v1")
 public class FeedConfigController {
 
-    @Autowired
-    FeedConfigService feedConfigService;
+    private final FeedConfigService feedConfigService;
 
     @GetMapping("/{id}")
     public FeedConfigDto getConfigById(@PathVariable Long id) {

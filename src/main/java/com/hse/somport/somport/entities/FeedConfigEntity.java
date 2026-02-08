@@ -3,8 +3,7 @@ package com.hse.somport.somport.entities;
 
 import com.hse.somport.somport.dto.FeedConfigDetails;
 import com.hse.somport.somport.utils.JsonConverter;
-import com.vladmihalcea.hibernate.type.json.JsonBinaryType;
-import com.vladmihalcea.hibernate.type.json.JsonType;
+
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;

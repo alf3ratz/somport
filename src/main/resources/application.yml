@@ -12,22 +12,17 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    password: postgres
+    password: somport
     url: jdbc:postgresql://localhost:5432/somport
-    username: postgres
-    own:
-      username: ${CONTAINER.USERNAME}
-      password: ${CONTAINER.PASSWORD}
-      url: ${CONTAINER.URL}
+    username: somport
   jpa:
     hibernate:
       ddl-auto: create
-  #    properties:
-  #      hibernate:
-  #        dialect: org.hibernate.dialect.PostgreSQLDialect
   liquibase:
     enabled: true
     change-log: classpath:db/changelog/db.changelog-master.xml
+  main:
+    allow-bean-definition-overriding: true
 
   security:
     jwt:
@@ -40,4 +35,13 @@ spring:
       keep-alive: 60000
       async-timeout: 0
 
+vaadin:
+  url-mapping: /ui/*
+  excludeUrls: /swagger-ui/**, /v3/api-docs/**, /swagger-resources/**, /webjars/**
 
+springdoc:
+  swagger-ui:
+    enabled: true
+    path: /swagger-ui/index.html
+  api-docs:
+    path: /v3/api-docs

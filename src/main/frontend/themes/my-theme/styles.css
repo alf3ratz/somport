@@ -1,0 +1,73 @@
+/* Telegram-like Light theme for Vaadin (Lumo) */
+html {
+  /* Base */
+  --lumo-base-color: #ffffff;
+  --lumo-body-text-color: rgba(0, 0, 0, 0.88);
+  --lumo-secondary-text-color: rgba(0, 0, 0, 0.62);
+  --lumo-tertiary-text-color: rgba(0, 0, 0, 0.45);
+
+  /* “Telegram blue” as primary (brand-like) */
+  --lumo-primary-color: #24A1DE;
+  --lumo-primary-text-color: #1b87c7;
+  --lumo-primary-contrast-color: #ffffff;
+  --lumo-primary-color-10pct: rgba(36, 161, 222, 0.10);
+  --lumo-primary-color-50pct: rgba(36, 161, 222, 0.50);
+
+  /* Backgrounds / surfaces (cards, inputs, grid headers) */
+  --lumo-shade: rgba(15, 23, 42, 1);            /* base for “shaded” calculations */
+  --lumo-shade-5pct: rgba(15, 23, 42, 0.05);
+  --lumo-shade-10pct: rgba(15, 23, 42, 0.10);
+  --lumo-contrast: rgba(0, 0, 0, 1);
+  --lumo-contrast-5pct: rgba(0, 0, 0, 0.05);
+  --lumo-contrast-10pct: rgba(0, 0, 0, 0.10);
+  --lumo-contrast-20pct: rgba(0, 0, 0, 0.20);
+
+  /* Borders and focus */
+  --lumo-border-radius-m: 10px;
+  --lumo-border-radius-l: 12px;
+  --lumo-primary-color-10pct: rgba(36, 161, 222, 0.12);
+
+  /* Typography */
+  --lumo-font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+  --lumo-line-height-m: 1.35;
+
+  /* Component sizing (slightly compact like Telegram) */
+  --lumo-size-m: 2.4rem;
+  --lumo-space-m: 0.9rem;
+
+  /* Nice focus ring */
+  --lumo-focus-ring-color: rgba(36, 161, 222, 0.35);
+}
+
+/* Make app background slightly tinted like Telegram surfaces */
+body {
+  background: #f4f7fb;
+}
+
+/* Optional: card-like view containers */
+vaadin-vertical-layout {
+  gap: 0.75rem;
+}
+
+/* Buttons: keep primary vivid, others calm */
+vaadin-button[theme~="primary"] {
+  box-shadow: none;
+}
+
+/* Inputs: softer border */
+vaadin-text-field::part(input-field),
+vaadin-number-field::part(input-field),
+vaadin-text-area::part(input-field),
+vaadin-combo-box::part(input-field) {
+  border: 1px solid rgba(15, 23, 42, 0.10);
+  background: #ffffff;
+}
+
+/* Grid: lighter header background, subtle separators */
+vaadin-grid::part(header-cell) {
+  background: #f7f9fc;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+vaadin-grid::part(cell) {
+  border-bottom: 1px solid rgba(15, 23, 42, 0.06);
+}

@@ -66,4 +66,17 @@ public class JwtFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
 
     }
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) {
+        String path = request.getRequestURI();
+
+        return path.startsWith("/VAADIN/")
+                || path.startsWith("/ui/VAADIN/")
+                || path.startsWith("/ui/")
+                || path.startsWith("/favicon.ico")
+                || path.startsWith("/login/")
+                || path.startsWith("/registration/")
+                || path.startsWith("/v3/api-docs/")
+                || path.startsWith("/swagger-ui/");
+    }
 }

@@ -20,7 +20,7 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(videoProxyHandler, "/video-stream/{streamId}")
-                .setAllowedOrigins("http://localhost:3000");
+                .setAllowedOrigins("http://localhost:8080");
     }
 
     @Bean
