@@ -9,13 +9,80 @@ services:
       POSTGRES_DB: somport
       POSTGRES_USER: somport
       POSTGRES_PASSWORD: somport
-  app:
-    build: .
+
+  minio:
+    image: quay.io/minio/minio:latest
+    container_name: minio
     ports:
-      - "9000:8080"
+      - "9000:9000"   # S3 API
+      - "9001:9001"   # Console
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://db/somport
-      SPRING_DATASOURCE_USERNAME: somport
-      SPRING_DATASOURCE_PASSWORD: somport
+      MINIO_ROOT_USER: somport
+      MINIO_ROOT_PASSWORD: somport1
+    volumes:
+      - minio_data:/data
+    command: server /data --console-address ":9001"
+    healthcheck:
+        test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/ready" ]
+        interval: 2s
+        timeout: 2s
+        retries: 30
+
+  minio-init:
+    image: quay.io/minio/mc:latest
     depends_on:
-      - db
+      - minio
+    entrypoint: >
+      /bin/sh -c "
+      until /usr/bin/mc alias set local http://minio:9000 somport somport1; do sleep 2; done;
+      until /usr/bin/mc ready local; do sleep 2; done;
+
+      /usr/bin/mc mb --ignore-existing local/media-bucket;
+
+      /usr/bin/mc admin user add local media-user media-user-password-123 || true;
+
+      printf '%s' '{
+        \"Version\": \"2012-10-17\",
+        \"Statement\": [
+          {
+            \"Sid\": \"ListBucket\",
+            \"Effect\": \"Allow\",
+            \"Action\": [\"s3:ListBucket\"],
+            \"Resource\": [\"arn:aws:s3:::media-bucket\"]
+          },
+          {
+            \"Sid\": \"RWObjects\",
+            \"Effect\": \"Allow\",
+            \"Action\": [
+              \"s3:GetObject\",
+              \"s3:PutObject\",
+              \"s3:DeleteObject\",
+              \"s3:AbortMultipartUpload\",
+              \"s3:ListMultipartUploadParts\"
+            ],
+            \"Resource\": [\"arn:aws:s3:::media-bucket/*\"]
+          }
+        ]
+      }' > /tmp/media-rw.json;
+
+      /usr/bin/mc admin policy create local media-bucket-rw /tmp/media-rw.json || true;
+      /usr/bin/mc admin policy attach local media-bucket-rw --user media-user;
+
+      /usr/bin/mc admin user svcacct add local media-user;
+
+      exit 0;
+      "
+
+
+volumes:
+  minio_data:
+#  app:
+#    build: .
+#    ports:
+#      - "9000:8080"
+#    environment:
+#      SPRING_DATASOURCE_URL: jdbc:postgresql://db/somport
+#      SPRING_DATASOURCE_USERNAME: somport
+#      SPRING_DATASOURCE_PASSWORD: somport
+#    depends_on:
+#      - db

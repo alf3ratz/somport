@@ -2,16 +2,16 @@ package com.hse.somport.somport.controllers;
 
 import com.hse.somport.somport.dto.VideoConfigDto;
 import com.hse.somport.somport.service.VideoConfigService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+@AllArgsConstructor
 @RestController
-@RequestMapping("/video-config")
+@RequestMapping("/api/video-config")
 public class VideoConfigController {
-    @Autowired
-    private VideoConfigService videoStreamService;
+
+    private final VideoConfigService videoStreamService;
 
     @GetMapping("/streams")
     public VideoConfigDto register() {

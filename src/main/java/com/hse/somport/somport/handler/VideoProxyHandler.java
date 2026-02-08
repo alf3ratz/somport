@@ -6,6 +6,7 @@ import org.springframework.web.socket.handler.BinaryWebSocketHandler;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Objects;
@@ -16,7 +17,6 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class VideoProxyHandler extends BinaryWebSocketHandler {
 
-    //private final Set<WebSocketSession> frontendSessions = Collections.newSetFromMap(new ConcurrentHashMap<>());
     private final Map<String, Set<WebSocketSession>> streamSessions =
             new ConcurrentHashMap<>();
 
@@ -60,7 +60,9 @@ public class VideoProxyHandler extends BinaryWebSocketHandler {
         Set<WebSocketSession> sessions = streamSessions.get(streamId);
         if (sessions == null || sessions.isEmpty()) return;
 
-        byte[] payload = message.getPayload().array();
+        ByteBuffer buf = message.getPayload();
+        byte[] payload = new byte[buf.remaining()];
+        buf.get(payload);
 
         sessions.parallelStream()
                 .filter(WebSocketSession::isOpen)
