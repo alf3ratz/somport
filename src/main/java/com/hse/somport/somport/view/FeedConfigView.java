@@ -7,6 +7,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.notification.NotificationVariant;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -124,7 +125,9 @@ public class FeedConfigView extends VerticalLayout {
             if (current == null) return;
 
             if (!binder.writeBeanIfValid(current)) {
-                Notification.show("Исправьте ошибки в форме");
+                var notification = Notification.show("Исправьте ошибки в форме");
+                notification.setPosition(Notification.Position.TOP_END);
+                notification.addThemeVariants(NotificationVariant.LUMO_ERROR);
                 return;
             }
 
@@ -137,7 +140,8 @@ public class FeedConfigView extends VerticalLayout {
 
             refreshGrid();
             edit(saved);
-            Notification.show("Сохранено");
+            var notification = Notification.show("Сохранено");
+            notification.setPosition(Notification.Position.TOP_END);
         });
 
         deleteBtn.addClickListener(e -> {
@@ -148,7 +152,9 @@ public class FeedConfigView extends VerticalLayout {
             service.deleteConfigById(current.getId());
             refreshGrid();
             editNew();
-            Notification.show("Удалено");
+            var notification = Notification.show("Удалено");
+            notification.setPosition(Notification.Position.TOP_END);
+            notification.addThemeVariants(NotificationVariant.LUMO_CONTRAST);
         });
     }
 

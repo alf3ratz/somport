@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequiredArgsConstructor
 @Table(name = "user_ref")
-public class UserEntity implements UserDetails {
+public class  UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

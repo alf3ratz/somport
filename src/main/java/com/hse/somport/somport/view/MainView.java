@@ -7,7 +7,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
 
-@Route(value = "/1", layout = MainLayout.class)
+@Route(value = "", layout = MainLayout.class)
 @PageTitle("Hello, Vaadin!")
 @AnonymousAllowed
 public class MainView extends VerticalLayout {

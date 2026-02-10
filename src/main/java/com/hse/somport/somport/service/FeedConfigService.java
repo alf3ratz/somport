@@ -7,6 +7,7 @@ import com.hse.somport.somport.config.mappers.UserMapper;
 import com.hse.somport.somport.dto.FeedConfigDto;
 import com.hse.somport.somport.entities.repositories.FeedConfigRepository;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
 import org.mapstruct.factory.Mappers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,13 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
+@AllArgsConstructor
 public class FeedConfigService {
     private static final String CONFIG_NOT_FOUND_MSG = "Конфигурация не найдена";
     private static final String CONFIG_WRONG_MSG = "Неверный формат конфигурации";
     private final FeedConfigMapper feedConfigMapper = Mappers.getMapper(FeedConfigMapper.class);
 
-    @Autowired
-    private FeedConfigRepository feedConfigRepository;
+    private final FeedConfigRepository feedConfigRepository;
 
     public FeedConfigDto createConfig(FeedConfigDto feedConfigDto) {
         if (feedConfigDto.getConfig().getFeedCount() == null || feedConfigDto.getConfig().getPoolNumber() == null) {
@@ -47,6 +48,7 @@ public class FeedConfigService {
                 .toList();
     }
 
+    @Transactional
     public FeedConfigDto updateConfigById(Long id, FeedConfigDto feedConfigDto) {
         if (feedConfigDto.getConfig() == null || feedConfigDto.getConfig().getFeedCount() == null) {
             throw new SomportBadRequestException(CONFIG_WRONG_MSG);
@@ -54,11 +56,9 @@ public class FeedConfigService {
         var existingEntity = feedConfigRepository.findById(id)
                 .orElseThrow(() -> new SomportNotFoundException(CONFIG_NOT_FOUND_MSG));
 
-        var updatedEntity = feedConfigMapper.feedConfigDtoToEntity(feedConfigDto);
-        updatedEntity.setId(existingEntity.getId());
-
-        var savedEntity = feedConfigRepository.save(updatedEntity);
-        return feedConfigMapper.feedConfigEntityToDto(savedEntity);
+        feedConfigRepository.updateFeedConfigById(feedConfigDto.getConfig(), id);
+        existingEntity.setConfig(feedConfigDto.getConfig());
+        return feedConfigMapper.feedConfigEntityToDto(existingEntity);
     }
 
     public void deleteConfigById(Long id) {
