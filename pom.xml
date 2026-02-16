@@ -14,6 +14,13 @@
     <properties>
         <java.version>21</java.version>
         <vaadin.version>25.0.4</vaadin.version>
+        <mapstruct.version>1.5.3.Final</mapstruct.version>
+        <jjwt.version>0.12.3</jjwt.version>
+        <springdoc.version>3.0.1</springdoc.version>
+        <bytedeco.version>1.5.6</bytedeco.version>
+        <mockito.version>4.0.0</mockito.version>
+        <hypersistence.version>3.15.1</hypersistence.version>
+        <jacoco.version>0.8.8</jacoco.version>
     </properties>
     <dependencies>
         <!--  Spring Boot Starters  -->
@@ -50,10 +57,16 @@
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+            <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>org.liquibase</groupId>
             <artifactId>liquibase-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-liquibase</artifactId>
+            <scope>compile</scope>
         </dependency>
         <!--  Utilities  -->
         <dependency>
@@ -64,37 +77,37 @@
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct</artifactId>
-            <version>1.5.3.Final</version>
+            <version>${mapstruct.version}</version>
         </dependency>
         <dependency>
             <groupId>org.mapstruct</groupId>
             <artifactId>mapstruct-processor</artifactId>
-            <version>1.5.3.Final</version>
+            <version>${mapstruct.version}</version>
             <scope>provided</scope>
         </dependency>
         <!--  JWT  -->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
-            <version>0.12.3</version>
+            <version>${jjwt.version}</version>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-impl</artifactId>
-            <version>0.12.3</version>
+            <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-jackson</artifactId>
-            <version>0.12.3</version>
+            <version>${jjwt.version}</version>
             <scope>runtime</scope>
         </dependency>
         <!--  SpringDoc OpenAPI  -->
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>3.0.1</version>
+            <version>${springdoc.version}</version>
         </dependency>
         <!--  Vaadin  -->
         <dependency>
@@ -123,13 +136,13 @@
         <dependency>
             <groupId>org.bytedeco</groupId>
             <artifactId>javacv</artifactId>
-            <version>1.5.6</version>
+            <version>${bytedeco.version}</version>
         </dependency>
         <!--  Testing  -->
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
-            <version>4.0.0</version>
+            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
 
@@ -137,7 +150,7 @@
         <dependency>
             <groupId>io.hypersistence</groupId>
             <artifactId>hypersistence-utils-hibernate-73</artifactId>
-            <version>3.15.1</version>
+            <version>${hypersistence.version}</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -174,7 +187,7 @@
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.8</version>
+                <version>${jacoco.version}</version>
                 <executions>
                     <execution>
                         <goals>
